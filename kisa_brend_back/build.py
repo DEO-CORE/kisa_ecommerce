@@ -1,6 +1,11 @@
 """Provision the production schema and shop media bucket before deployment."""
 import os
 import django
+if os.getenv('VERCEL_ENV') == 'production':
+    # Session locks require the session pooler, not Supabase's transaction pooler.
+    migration_url = os.getenv('MIGRATION_DATABASE_URL') or os.getenv('POSTGRES_URL_NON_POOLING')
+    if migration_url:
+        os.environ['DATABASE_URL'] = migration_url
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kisa_shop.settings')
 django.setup()
 from django.conf import settings
@@ -13,7 +18,8 @@ if os.getenv('VERCEL_ENV') == 'production':
     call_command('makemigrations', check=True, dry_run=True, interactive=False)
     # Serialize schema changes when two production deployments overlap.
     with connection.cursor() as cursor:
-        cursor.execute('SELECT pg_advisory_lock(180207, 1)')
+        cursor.execute("SET lock_timeout = '120s'")
+        cursor.execute('SELECT pg_advisory_lock(180207, 2)')
     try:
         with connection.cursor() as cursor:
             cursor.execute('CREATE SCHEMA IF NOT EXISTS kisa')
@@ -21,7 +27,7 @@ if os.getenv('VERCEL_ENV') == 'production':
         call_command('bootstrap_admin')
     finally:
         with connection.cursor() as cursor:
-            cursor.execute('SELECT pg_advisory_unlock(180207, 1)')
+            cursor.execute('SELECT pg_advisory_unlock(180207, 2)')
     from core.storage import SupabaseMediaStorage
     storage = SupabaseMediaStorage()
     storage.ensure_bucket()
