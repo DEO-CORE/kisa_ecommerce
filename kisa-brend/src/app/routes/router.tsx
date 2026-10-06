@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../layouts/Layout";
 import { paths } from '@shared/constants/consts';
+import { InfoPage } from '@/pages/info/InfoPage';
+import { documents } from '@/pages/info/documents';
 import {
     HomePage,
     AboutPage,
@@ -17,6 +19,7 @@ export const router = createBrowserRouter([
         element: <Layout />,
         errorElement: <ErrorPage />,
         children: [
+            ...documents.map(document => ({ path: document.path, element: <InfoPage pageType={document.type} /> })),
             { path: paths.main, element: <HomePage /> },
             { path: paths.loading, element: <LoadingPage /> },
             { path: paths.about, element: <AboutPage /> },

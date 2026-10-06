@@ -11,7 +11,7 @@ class SiteSettingsSerializer(serializers.ModelSerializer):
 class ContactsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contacts
-        fields = ('telegram_url', 'phone', 'address', 'work_hours')
+        fields = ('telegram_url', 'phone', 'address', 'work_hours', 'seller_name', 'country', 'registration_number', 'tax_id', 'legal_address', 'email')
 
 
 class PartnershipSerializer(serializers.ModelSerializer):
@@ -29,4 +29,4 @@ class SupportSerializer(serializers.ModelSerializer):
 class InfoPageSerializer(serializers.ModelSerializer):
     class Meta:
         model = InfoPage
-        fields = ('page_type', 'title', 'content', 'is_active')
+        fields = ('page_type', 'title', 'content', 'is_active', 'updated_at')

@@ -15,6 +15,7 @@ class SiteSettingsAdmin(SingletonModelAdmin):
 @admin.register(Contacts)
 class ContactsAdmin(SingletonModelAdmin):
     fieldsets = (
+        ('Продавец и реквизиты', {'fields': ('seller_name', 'country', 'registration_number', 'tax_id', 'legal_address', 'email')}),
         ('Контакты', {
             'fields': ('telegram_url', 'phone', 'address', 'work_hours')
         }),

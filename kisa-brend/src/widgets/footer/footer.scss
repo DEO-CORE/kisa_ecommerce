@@ -38,7 +38,12 @@
         white-space: nowrap;
 
         &--buyers {
-            gap: 36px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px 24px;
+            white-space: normal;
+            align-items: start;
+            > * { text-align: left; line-height: 1.5; overflow-wrap: anywhere; }
         }
     }
 
@@ -133,3 +138,5 @@
     }
 
 }
+
+@media (max-width: 640px) { .footer__links--buyers { grid-template-columns: 1fr; } }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './cookies.scss';
 
 const storageKey = 'kisa-cookie-notice-v1';
@@ -46,7 +47,7 @@ export const CookieBanner = () => {
             <div className="cookie-banner__copy">
                 <h2 id="cookie-title">НЕМНОГО О COOKIE</h2>
                 <p>Мы используем необходимые cookie и хранилище браузера для работы сайта, корзины и ваших настроек.</p>
-                <p id="cookie-details" hidden={!details} className="cookie-banner__details">Рекламные и аналитические трекеры не подключены. Корзина сохраняется на вашем устройстве. Подтверждение этого уведомления хранится 180 дней. Посмотреть информацию снова можно внизу сайта, нажав «Cookie».</p>
+                <p id="cookie-details" hidden={!details} className="cookie-banner__details">Рекламные и аналитические трекеры не подключены. Корзина сохраняется на вашем устройстве. Подтверждение этого уведомления хранится 180 дней. Посмотреть информацию снова можно внизу сайта, нажав «Настройки cookie». <Link to="/cookies">Политика cookie ↗</Link> · <Link to="/privacy">Конфиденциальность ↗</Link></p>
             </div>
             <div className="cookie-banner__actions">
                 <button type="button" className="cookie-banner__more" aria-expanded={details} aria-controls="cookie-details" onClick={() => setDetails(!details)}>{details ? 'Свернуть' : 'Подробнее'} ↗</button>

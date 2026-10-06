@@ -18,6 +18,12 @@ class SiteSettings(SingletonBase):
 
 
 class Contacts(SingletonBase):
+    seller_name = models.CharField('Наименование продавца / ФИО ИП', max_length=255, blank=True)
+    country = models.CharField('Страна регистрации', max_length=100, blank=True)
+    registration_number = models.CharField('Регистрационный номер', max_length=100, blank=True)
+    tax_id = models.CharField('ИНН / налоговый номер', max_length=100, blank=True)
+    legal_address = models.TextField('Юридический адрес', blank=True)
+    email = models.EmailField('Email для обращений и персональных данных', blank=True)
     telegram_url = models.URLField('Telegram (ссылка/юзернейм)', max_length=255, blank=True, help_text='Например: https://t.me/kisa_shop или @kisa_shop')
     phone = models.CharField('Телефон', max_length=50, blank=True)
     address = models.TextField('Адрес', blank=True)
@@ -58,15 +64,20 @@ class Support(SingletonBase):
 
 class InfoPage(TimeStampedModel):
     PAGE_TYPES = [
+        ('cookies', 'Политика cookie'),
+        ('delivery', 'Доставка'),
+        ('payment', 'Оплата'),
+        ('returns', 'Возврат и обмен'),
+        ('contacts', 'Контакты и реквизиты'),
         ('payment_return', 'Оплата и возврат'),
         ('documents', 'Документы'),
         ('privacy', 'Политика конфиденциальности'),
-        ('terms', 'Условия использования'),
+        ('terms', 'Условия покупки и использования'),
     ]
     
     page_type = models.CharField('Тип страницы', max_length=20, choices=PAGE_TYPES, unique=True)
     title = models.CharField('Заголовок', max_length=200)
-    content = models.TextField('Контент (HTML/Markdown)', blank=True)
+    content = models.TextField('Контент', blank=True, help_text='Обычный текст; заголовки разделов начинайте с ##. HTML не исполняется.')
     is_active = models.BooleanField('Активна', default=True)
 
     class Meta:

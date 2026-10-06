@@ -100,10 +100,11 @@ export const CartDrawer = () => {
                     <form className="cart__form" onSubmit={handleSubmit}>
                         <label className="cart__field">Имя<input name="customer_name" autoComplete="name" required maxLength={100} /></label>
                         <label className="cart__field">Телефон<input name="customer_phone" type="tel" autoComplete="tel" required maxLength={20} /></label>
+                        <p className="cart__notice">Перед отправкой ознакомьтесь с <Link to="/terms" onClick={closeCart}>условиями покупки</Link> и <Link to="/privacy" onClick={closeCart}>политикой конфиденциальности</Link>. Отправка заказа не списывает деньги.</p>
                         {submitError && <p className="cart__notice" role="alert">{submitError}</p>}
                         <button className="cart__checkout" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Отправляем…' : 'Оформить заказ'}</button>
                     </form>
-                    <p className="cart__delivery-note">Доставка рассчитывается после подтверждения заказа.<br />Безопасная оплата · Возврат в течение 14 дней</p>
+                    <p className="cart__delivery-note"><Link to="/delivery" onClick={closeCart}>Доставка</Link> рассчитывается при подтверждении заказа.<br /><Link to="/payment" onClick={closeCart}>Оплата</Link> · <Link to="/returns" onClick={closeCart}>Возврат и обмен</Link></p>
                 </>
             ) : (
                 <div className="cart__empty">
