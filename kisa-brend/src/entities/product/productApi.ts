@@ -26,7 +26,7 @@ interface ApiProductListItem {
     id: number;
     name: string;
     slug: string;
-    drop: { name: string } | null;
+    drop: { name: string; slug: string } | null;
     price_rub: string;
     price_kgs: string;
     main_image_url: string | null;
@@ -97,6 +97,7 @@ const toProduct = (source: ApiProductDetail, color: ApiColor): Product => {
         colorId: color.id,
         name: source.name,
         category,
+        collection: source.drop ?? undefined,
         price: Number(source.price_kgs),
         color: color.name,
         colorLabel: color.name.toLocaleUpperCase('ru'),

@@ -13,7 +13,7 @@ export const CatalogPage = () => {
     const [limit, setLimit] = useState(16);
     const catalog = products;
     const filtered = catalog.filter((product) =>
-        (!color || product.color === color) && (!category || product.category === category) && (!collection || product.isNew));
+        (!color || product.color === color) && (!category || product.category === category) && (!collection || (collection === 'new' ? product.isNew : `drop:${product.collection?.slug}` === collection)));
     const sorted = [...filtered].sort((a, b) => sort === 'asc' ? a.price - b.price : sort === 'desc' ? b.price - a.price : 0);
     const visible = sorted.slice(0, limit);
     const hasFilters = !!(color || category || collection || sort);
@@ -48,6 +48,7 @@ export const CatalogPage = () => {
                     <select className="catalog__filter" value={collection} onChange={(event) => setCollection(event.target.value)} aria-label="Коллекции">
                         <option className="catalog__option" value="">Коллекции</option>
                         <option className="catalog__option" value="new">Новинки</option>
+                        {[...new Map(products.flatMap(product => product.collection ? [[product.collection.slug, product.collection] as const] : [])).values()].map(drop => <option key={drop.slug} value={`drop:${drop.slug}`}>{drop.name}</option>)}
                     </select>
                     {hasFilters && <button className="catalog__reset" type="button" onClick={reset}>Сбросить ×</button>}
                 </div>

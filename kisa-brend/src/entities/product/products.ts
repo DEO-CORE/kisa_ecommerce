@@ -8,6 +8,7 @@ export interface Product {
     colorId?: number;
     name: string;
     category: Category;
+    collection?: { slug: string; name: string };
     price: number;
     color: string;
     colorLabel: string;
