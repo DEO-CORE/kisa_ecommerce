@@ -10,9 +10,18 @@ from django.db import connection
 if os.getenv('VERCEL_ENV') == 'production':
     if connection.vendor != 'postgresql':
         raise RuntimeError('Production requires the connected PostgreSQL database.')
+    call_command('makemigrations', check=True, dry_run=True, interactive=False)
+    # Serialize schema changes when two production deployments overlap.
     with connection.cursor() as cursor:
-        cursor.execute('CREATE SCHEMA IF NOT EXISTS kisa')
-    call_command('migrate', interactive=False)
+        cursor.execute('SELECT pg_advisory_lock(180207, 1)')
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute('CREATE SCHEMA IF NOT EXISTS kisa')
+        call_command('migrate', interactive=False)
+        call_command('bootstrap_admin')
+    finally:
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT pg_advisory_unlock(180207, 1)')
     from core.storage import SupabaseMediaStorage
     storage = SupabaseMediaStorage()
     storage.ensure_bucket()
