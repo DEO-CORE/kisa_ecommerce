@@ -34,3 +34,8 @@ class Subscriber(TimeStampedModel):
 
     def __str__(self):
         return self.email
+
+
+class SeedRun(models.Model):
+    key = models.CharField(max_length=100, unique=True)
+    completed_at = models.DateTimeField(auto_now_add=True)

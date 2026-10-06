@@ -25,12 +25,13 @@ if os.getenv('VERCEL_ENV') == 'production':
             cursor.execute('CREATE SCHEMA IF NOT EXISTS kisa')
         call_command('migrate', interactive=False)
         call_command('bootstrap_admin')
+        from core.storage import SupabaseMediaStorage
+        storage = SupabaseMediaStorage()
+        storage.ensure_bucket()
+        call_command('seed_demo')
     finally:
         with connection.cursor() as cursor:
             cursor.execute('SELECT pg_advisory_unlock(180207, 2)')
-    from core.storage import SupabaseMediaStorage
-    storage = SupabaseMediaStorage()
-    storage.ensure_bucket()
     # Verify both authenticated uploads and public asset delivery on every release.
     import base64
     from urllib.request import urlopen
