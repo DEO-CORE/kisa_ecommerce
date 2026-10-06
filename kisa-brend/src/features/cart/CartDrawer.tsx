@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useContent } from '@/shared/api/content';
+import { buildWhatsAppUrl } from './whatsapp';
 import { Link, generatePath } from 'react-router-dom';
 import { Minus, Plus, X } from 'lucide-react';
 import { formatPrice } from '@/entities/product/products';
 import { useProductCatalog } from '@/entities/product/productCatalogContext';
-import { createOrder } from '@/entities/product/productApi';
 import { paths } from '@/shared/constants/consts';
 import { Modal } from '@/shared/ui/Modal';
 import { useCart } from './cartContext';
@@ -13,13 +13,10 @@ import { ProductCard } from '@/widgets/productCard/ProductCard';
 import { Footer } from '@/widgets/footer/Footer';
 
 export const CartDrawer = () => {
-    const { items, isOpen, closeCart, changeQuantity, clearCart } = useCart();
+    const { items, isOpen, closeCart, changeQuantity } = useCart();
     const { products } = useProductCatalog();
-    const queryClient = useQueryClient();
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const contacts = useContent<{ phone: string }>('/footer/contacts/');
     const [submitError, setSubmitError] = useState('');
-    const [isOrderPlaced, setIsOrderPlaced] = useState(false);
-    const [orderNumber, setOrderNumber] = useState('');
     const entries = items.flatMap((item) => {
         const product = products.find((candidate) => candidate.id === item.productId);
         return product ? [{ ...item, product }] : [];
@@ -27,52 +24,33 @@ export const CartDrawer = () => {
     const total = entries.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
     const handleClose = () => {
         closeCart();
-        setIsOrderPlaced(false);
-        setOrderNumber('');
         setSubmitError('');
     };
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (entries.some(({ product }) => !product.apiId || !product.colorId)) {
-            setSubmitError('Каталог ещё не загружен. Попробуйте позже.');
+        setSubmitError('');
+        if (entries.length !== items.length || !entries.length || entries.some(({ product, size, quantity }) => quantity > product.stock[size])) {
+            setSubmitError('Наличие товаров изменилось. Проверьте количество и размеры в корзине.');
             return;
         }
         const formData = new FormData(event.currentTarget);
-        setIsSubmitting(true);
-        setSubmitError('');
         try {
-            const order = await createOrder({
-                customer_name: String(formData.get('customer_name')),
-                customer_phone: String(formData.get('customer_phone')),
-                currency: 'KGS',
-                items: entries.map(({ product, size, quantity }) => ({
-                    product_id: product.apiId!,
-                    color_id: product.colorId!,
-                    size_name: size,
-                    quantity,
-                })),
-            });
-            clearCart();
-            void queryClient.invalidateQueries({ queryKey: ["products"] });
-            setOrderNumber(order.order_number ?? '');
-            setIsOrderPlaced(true);
+            const url = buildWhatsAppUrl(contacts.data?.phone ?? '', entries, {
+                name: String(formData.get('customer_name') ?? '').trim(),
+                phone: String(formData.get('customer_phone') ?? '').trim(),
+                delivery: String(formData.get('delivery') ?? '').trim(),
+                comment: String(formData.get('comment') ?? '').trim(),
+            }, window.location.origin);
+            window.location.assign(url);
         } catch (error) {
-            setSubmitError(error instanceof Error ? error.message : 'Не удалось отправить заказ. Попробуйте ещё раз.');
-        } finally {
-            setIsSubmitting(false);
+            setSubmitError(error instanceof Error ? error.message : 'Не удалось открыть WhatsApp.');
         }
     };
 
     return (
         <Modal open={isOpen} onClose={handleClose} title="Ваш заказ" className="cart">
             <h2 className="cart__title">Ваш заказ:</h2>
-            {isOrderPlaced ? (
-                <div className="cart__success" role="status">
-                    <p className="cart__success-title">Заказ принят</p>
-                    {orderNumber && <p>Номер заказа: {orderNumber}</p>}
-                    <button className="cart__checkout" type="button" onClick={handleClose}>Продолжить покупки</button>
-                </div>
-            ) : entries.length ? (
+            {entries.length ? (
                 <>
                     <ul className="cart__items">
                         {entries.map(({ product, size, quantity }) => (
@@ -100,9 +78,13 @@ export const CartDrawer = () => {
                     <form className="cart__form" onSubmit={handleSubmit}>
                         <label className="cart__field">Имя<input name="customer_name" autoComplete="name" required maxLength={100} /></label>
                         <label className="cart__field">Телефон<input name="customer_phone" type="tel" autoComplete="tel" required maxLength={20} /></label>
+                        <label className="cart__field">Город / способ получения (необязательно)<input name="delivery" autoComplete="address-level2" maxLength={200} /></label>
+                        <label className="cart__field">Комментарий (необязательно)<input name="comment" maxLength={500} /></label>
+                        <p className="cart__notice">Откроется WhatsApp с составом заказа. Нажмите «Отправить» в чате, чтобы магазин получил заявку. Наличие, доставка и оплата согласуются в переписке. Корзина сохранится.</p>
                         <p className="cart__notice">Перед отправкой ознакомьтесь с <Link to="/terms" onClick={closeCart}>условиями покупки</Link> и <Link to="/privacy" onClick={closeCart}>политикой конфиденциальности</Link>. Отправка заказа не списывает деньги.</p>
+                        {contacts.isError && <p className="cart__notice" role="alert">Не удалось загрузить контакт магазина. <button type="button" onClick={() => void contacts.refetch()}>Повторить</button></p>}
                         {submitError && <p className="cart__notice" role="alert">{submitError}</p>}
-                        <button className="cart__checkout" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Отправляем…' : 'Оформить заказ'}</button>
+                        <button className="cart__checkout" type="submit" disabled={contacts.isPending}>{contacts.isPending ? 'Загружаем контакты…' : 'Продолжить в WhatsApp'}</button>
                     </form>
                     <p className="cart__delivery-note"><Link to="/delivery" onClick={closeCart}>Доставка</Link> рассчитывается при подтверждении заказа.<br /><Link to="/payment" onClick={closeCart}>Оплата</Link> · <Link to="/returns" onClick={closeCart}>Возврат и обмен</Link></p>
                 </>

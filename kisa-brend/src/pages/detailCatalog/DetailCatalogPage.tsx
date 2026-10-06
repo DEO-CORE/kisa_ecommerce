@@ -21,7 +21,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
     const sections = [
         { title: 'Состав и уход', text: product.composition, extra: 'Стирать вывернутым наизнанку. Не отбеливать и не сушить в сушильной машине.' },
         { title: 'Посадка', text: product.fit, extra: 'Сравните замеры из таблицы с похожей вещью из вашего гардероба.' },
-        { title: 'Доставка и возврат', text: 'Возврат неношеного товара возможен в течение 14 дней.', extra: 'Сохраните бирки и упаковку. Условия доставки можно уточнить при оформлении заказа.' },
+        { title: 'Доставка и возврат', text: 'Стоимость и сроки доставки согласуются при подтверждении заказа до оплаты.', extra: 'Для обмена или возврата обратитесь в магазин с номером заказа. Условия описаны на странице «Возврат и обмен».' },
     ];
 
     return (
@@ -63,7 +63,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
                     </div>
                     <p className="detailCatalog__stock" aria-live="polite">Выбран размер {size} · осталось {product.stock[size]} шт.</p>
                     <button className="detailCatalog__buy" type="button" onClick={() => addItem(product, size)}>Добавить в корзину — {formatPrice(product.price)}</button>
-                    <p className="detailCatalog__delivery">Доставка по России 2–7 дней. Бесплатно при заказе от 15 000.</p>
+                    <p className="detailCatalog__delivery"><Link to="/delivery">Доставка</Link> согласуется при подтверждении заказа. <Link to="/returns">Возврат и обмен →</Link></p>
                     <div className="detailCatalog__accordions">
                         {sections.map(({ title, text, extra }, index) => (
                             <section className="detailCatalog__accordion" key={title}>
