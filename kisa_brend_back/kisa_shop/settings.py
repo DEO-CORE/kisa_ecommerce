@@ -6,6 +6,7 @@ from pathlib import Path
 import os
 import hashlib
 import hmac
+from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -82,6 +83,10 @@ import dj_database_url
 
 DATABASE_URL = os.getenv('DATABASE_URL') or os.getenv('POSTGRES_URL')
 if DATABASE_URL:
+    # Marketplace URLs may contain client metadata that libpq does not accept.
+    parts = urlsplit(DATABASE_URL)
+    query = [(key, value) for key, value in parse_qsl(parts.query) if key not in {'supa', 'pgbouncer', 'connection_limit', 'pool_timeout'}]
+    DATABASE_URL = urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(query), parts.fragment))
     DATABASES = {
         'default': dj_database_url.parse(DATABASE_URL, conn_max_age=0 if IS_VERCEL else 600, conn_health_checks=True)
     }
