@@ -26,6 +26,7 @@ if IS_VERCEL and os.getenv('VERCEL_URL'):
     ALLOWED_HOSTS.append(os.environ['VERCEL_URL'])
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -124,6 +125,26 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+JAZZMIN_SETTINGS = {
+    'site_title': 'KISA Shop',
+    'site_header': 'KISA Shop',
+    'site_brand': 'KISA',
+    'welcome_sign': 'Управление магазином KISA',
+    'copyright': 'KISA',
+    'show_ui_builder': False,
+    'navigation_expanded': True,
+    'order_with_respect_to': ['catalog', 'orders', 'about', 'journal', 'footer', 'core', 'auth'],
+    'icons': {
+        'catalog': 'fas fa-tshirt',
+        'orders': 'fas fa-shopping-bag',
+        'about': 'fas fa-info-circle',
+        'journal': 'fas fa-newspaper',
+        'footer': 'fas fa-cog',
+        'core': 'fas fa-envelope',
+        'auth': 'fas fa-users-cog',
+    },
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
