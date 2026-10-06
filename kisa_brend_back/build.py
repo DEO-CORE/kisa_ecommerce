@@ -14,5 +14,18 @@ if os.getenv('VERCEL_ENV') == 'production':
         cursor.execute('CREATE SCHEMA IF NOT EXISTS kisa')
     call_command('migrate', interactive=False)
     from core.storage import SupabaseMediaStorage
-    SupabaseMediaStorage().ensure_bucket()
+    storage = SupabaseMediaStorage()
+    storage.ensure_bucket()
+    # Verify both authenticated uploads and public asset delivery on every release.
+    import base64
+    from urllib.request import urlopen
+    from django.core.files.base import ContentFile
+    probe = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a5XkAAAAASUVORK5CYII=')
+    name = storage.save('_checks/deployment.png', ContentFile(probe))
+    try:
+        with urlopen(storage.url(name), timeout=30) as response:
+            if response.read() != probe:
+                raise RuntimeError('Persistent storage verification failed.')
+    finally:
+        storage.delete(name)
     print('Production database and persistent media storage ready.')
