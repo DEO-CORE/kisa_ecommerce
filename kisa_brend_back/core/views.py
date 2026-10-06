@@ -17,3 +17,18 @@ class SubscribeView(APIView):
         serializer.is_valid(raise_exception=True)
         Subscriber.objects.get_or_create(email=serializer.validated_data['email'].lower())
         return Response({'message': 'Вы подписаны на новости KISA.'}, status=status.HTTP_201_CREATED)
+
+
+class HealthView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def get(self, request):
+        from django.db import connection
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT 1')
+                cursor.fetchone()
+        except Exception:
+            return Response({'status': 'unavailable'}, status=503)
+        return Response({'status': 'ok'})

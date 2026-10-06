@@ -6,7 +6,7 @@ from journal.api import views as journal_views
 from orders.api import views as orders_views
 from footer.api import views as footer_views
 
-from .views import SubscribeView
+from .views import SubscribeView, HealthView
 
 router = DefaultRouter()
 
@@ -31,6 +31,7 @@ router.register(r'orders', orders_views.OrderViewSet, basename='order')
 router.register(r'footer/info-pages', footer_views.InfoPageViewSet, basename='info-page')
 
 urlpatterns = [
+    path('health/', HealthView.as_view(), name='health'),
     path('newsletter/subscribe/', SubscribeView.as_view(), name='subscribe'),
     path('', include(router.urls)),
     # Singleton endpoints
