@@ -133,6 +133,7 @@ JAZZMIN_SETTINGS = {
     'welcome_sign': 'Управление магазином KISA',
     'copyright': 'KISA',
     'show_ui_builder': False,
+    'topmenu_links': [{'name': 'Аналитика', 'url': 'admin-analytics', 'permissions': ['orders.view_order', 'orders.view_orderitem']}],
     'navigation_expanded': True,
     'order_with_respect_to': ['catalog', 'orders', 'about', 'journal', 'footer', 'core', 'auth'],
     'icons': {

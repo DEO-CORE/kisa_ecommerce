@@ -5,6 +5,7 @@ import { Suspense } from 'react';
 import { useAppLoading } from '@/shared/hooks/useAppLoading';
 import { Outlet, useLocation } from 'react-router-dom';
 import { paths } from '@/shared/constants/consts';
+import { CookieBanner } from '@/features/cookies/CookieBanner';
 import '../styles/editorial.scss';
 import '../styles/responsive.scss';
 
@@ -28,6 +29,7 @@ export const Layout = () => {
             </main>
             <Footer />
             <CartDrawer />
+            <CookieBanner />
         </div>
     );
 };

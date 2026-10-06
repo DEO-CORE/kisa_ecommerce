@@ -6,6 +6,7 @@ from .models import SingletonBase, TimeStampedModel, SEOModel
 admin.site.site_header = 'KISA Shop — Админ-панель'
 admin.site.site_title = 'KISA Shop'
 admin.site.index_title = 'Управление магазином'
+admin.site.index_template = 'admin/kisa_index.html'
 from .models import Subscriber
 
 

@@ -1,0 +1,5 @@
+{% extends "admin/index.html" %}
+{% block content %}
+{% if perms.orders.view_order and perms.orders.view_orderitem %}<div class="col-12 mb-3"><a class="btn btn-dark" href="{% url 'admin-analytics' %}"><i class="fas fa-chart-line mr-2" aria-hidden="true"></i>Аналитика магазина →</a></div>{% endif %}
+{{ block.super }}
+{% endblock %}

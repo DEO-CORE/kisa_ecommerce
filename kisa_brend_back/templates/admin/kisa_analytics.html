@@ -1,0 +1,23 @@
+{% extends "admin/base_site.html" %}
+{% block content_title %}Аналитика магазина{% endblock %}
+{% block content %}
+<div class="col-12">
+  <div class="d-flex flex-wrap align-items-center justify-content-between mb-3" style="gap:12px">
+    <p class="mb-0">{{ start_day|date:"d.m.Y" }} — {{ today|date:"d.m.Y" }} · время Бишкек</p>
+    <form method="get" class="d-flex" style="gap:8px"><label for="days" class="sr-only">Период</label><select name="days" id="days" class="form-control"><option value="7" {% if days == 7 %}selected{% endif %}>7 дней</option><option value="30" {% if days == 30 %}selected{% endif %}>30 дней</option><option value="90" {% if days == 90 %}selected{% endif %}>90 дней</option></select><button class="btn btn-dark" type="submit">Показать</button></form>
+  </div>
+  <div class="row">
+    <div class="col-md-4"><div class="card"><div class="card-body"><p>Все заказы</p><h2>{{ total_orders }}</h2></div></div></div>
+    <div class="col-md-4"><div class="card"><div class="card-body"><p>Ожидают оплаты</p><h2>{{ new_orders }}</h2></div></div></div>
+    <div class="col-md-4"><div class="card"><div class="card-body"><p>Оплаченные заказы</p><h2>{{ paid_orders }}</h2></div></div></div>
+  </div>
+  <div class="card"><div class="card-header"><h3 class="card-title">Выручка и средний чек</h3></div><div class="card-body">
+    <p class="text-muted">Заказы, созданные в выбранный период, со статусом «Оплачен», «Отправлен», «Доставлен» или «Завершен». Суммы включают доставку. Отмены и возвраты исключены; валюты считаются отдельно.</p>
+    <div class="table-responsive"><table class="table"><thead><tr><th>Валюта</th><th>Выручка</th><th>Средний чек</th><th>Заказы</th></tr></thead><tbody>{% for item in revenue_totals %}<tr><td>{{ item.currency }}</td><td>{{ item.revenue|floatformat:2 }}</td><td>{{ item.average|floatformat:2 }}</td><td>{{ item.count }}</td></tr>{% empty %}<tr><td colspan="4">За этот период оплаченных заказов нет.</td></tr>{% endfor %}</tbody></table></div>
+  </div></div>
+  <div class="row"><div class="col-lg-8"><div class="card"><div class="card-header"><h3 class="card-title">Заказы по дням</h3></div><div class="card-body" style="max-height:440px;overflow:auto">
+    {% for day in daily %}<div class="d-flex align-items-center mb-2" style="gap:12px"><span style="width:80px;flex-shrink:0">{{ day.date|date:"d.m" }}</span><div class="progress flex-grow-1" style="height:14px"><div class="progress-bar bg-dark" style="width:{{ day.width }}%"></div></div><span style="width:32px;text-align:right">{{ day.count }}</span></div>{% endfor %}
+  </div></div></div><div class="col-lg-4"><div class="card"><div class="card-header"><h3 class="card-title">Статусы заказов</h3></div><div class="card-body"><table class="table">{% for status in statuses %}<tr><td>{{ status.label }}</td><td class="text-right">{{ status.count }}</td></tr>{% endfor %}</table></div></div></div></div>
+  <div class="card"><div class="card-header"><h3 class="card-title">Популярные товары в оплаченных заказах</h3></div><div class="card-body"><div class="table-responsive"><table class="table"><thead><tr><th>Товар</th><th>Артикул</th><th>Продано, шт.</th></tr></thead><tbody>{% for item in top_products %}<tr><td>{{ item.product_name }}</td><td>{{ item.product_sku|default:"—" }}</td><td>{{ item.quantity }}</td></tr>{% empty %}<tr><td colspan="3">Данных о продажах пока нет.</td></tr>{% endfor %}</tbody></table></div></div></div>
+</div>
+{% endblock %}

@@ -35,6 +35,7 @@ export const Footer = ({ shop = false }: { shop?: boolean }) => {
                         <section className="footer__group" aria-label="Покупателям">
                             <h2 className="footer__title">Покупателям →</h2>
                             <div className="footer__links footer__links--buyers">
+                                <button className="footer__link" type="button" onClick={() => window.dispatchEvent(new Event('kisa:cookie-settings'))}>Cookie</button>
                                 {(pages.data ?? []).map(page => <button className="footer__link" type="button" key={page.page_type} onClick={() => setOpened(page)}>{page.title}</button>)}
                             </div>
                         </section>

@@ -6,8 +6,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from core.analytics import analytics
 
 urlpatterns = [
+    path('admin/analytics/', admin.site.admin_view(analytics), name='admin-analytics'),
     path('admin/', admin.site.urls),
     path('api/', include('core.api_urls')),
     
