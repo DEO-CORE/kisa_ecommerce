@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useContent } from '@/shared/api/content';
 import { documents, isPublicEmail, type InfoDocument, type StoreContacts } from './documents';
@@ -34,7 +34,12 @@ export const InfoPage = ({ pageType }: { pageType: string }) => {
                 <div className="info-page__content">
                     {page.isPending && <p role="status">Загружаем информацию…</p>}
                     {page.isError && <div role="alert"><p>Страница пока недоступна.</p><button type="button" onClick={() => void page.refetch()}>Попробовать снова →</button></div>}
-                    {page.data?.content.split(/\n\s*\n/).map((block, index) => block.startsWith('## ') ? <h2 key={index}>{block.slice(3)}</h2> : <p key={index}>{block}</p>)}
+                    {page.data?.content.split(/\n\s*\n/).map((block, index) => {
+                        if (!block.startsWith('## ')) return <p key={index}>{block}</p>;
+                        const [heading, ...lines] = block.split('\n');
+                        const body = lines.join('\n').trim();
+                        return <Fragment key={index}><h2>{heading.slice(3)}</h2>{body && <p>{body}</p>}</Fragment>;
+                    })}
                     {showContacts && <section aria-label="Контактные данные">
                         {fields.length > 0 && <dl className="info-page__requisites">{fields.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>}
                         <div className="info-page__contacts">
