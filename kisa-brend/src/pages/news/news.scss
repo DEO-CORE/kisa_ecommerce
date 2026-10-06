@@ -1,0 +1,124 @@
+.news {
+    &__intro { padding-top: 72px; padding-bottom: 54px; }
+    &__intro h1 { margin: 20px 0 12px; font-size: 96px; line-height: 1.05; font-weight: 600; letter-spacing: -2px; }
+    &__intro > p:last-child { font-size: 18px; line-height: 26px; }
+    &__navigation { border-block: 1px solid #ddd; }
+    &__navigation > div { display: flex; gap: 32px; }
+    &__navigation button { min-height: 49px; font: 12px 'JetBrains Mono', monospace; }
+    &__navigation button[aria-pressed='true'] { text-decoration: underline; text-underline-offset: 4px; }
+    &__content { padding-top: 64px; padding-bottom: 96px; }
+    &__featured { display: grid; grid-template-columns: 820fr 412fr; gap: 48px; margin-bottom: 64px; }
+    &__image-button { display: block; width: 100%; text-align: left; }
+    &__image-button img { width: 100%; object-fit: cover; }
+    &__badge { display: inline-block; padding: 5px 10px; border-radius: 6px; background: #ffd21c; font: 12px/18px 'JetBrains Mono', monospace; }
+    &__featured-meta { margin: 20px 0 22px; }
+    &__featured h2 { font-size: 44px; line-height: 1.03; letter-spacing: -.7px; }
+    &__featured h2 button, &__card h3 button { text-align: left; }
+    &__featured-description { margin-top: 24px; font-size: 16px; line-height: 23px; color: #888; }
+    &__latest > .editorial__section-heading { padding-bottom: 32px; border-bottom: 1px solid #ddd; margin-bottom: 32px; }
+    &__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    &__card img { aspect-ratio: 410 / 450; }
+    &__meta { display: flex; justify-content: space-between; gap: 12px; margin-top: 14px; }
+    &__meta time { color: #999; }
+    &__card h3 { margin-top: 16px; font-size: 23px; line-height: 1.12; letter-spacing: -.3px; }
+    &__card > p { margin-top: 14px; color: #888; font-size: 14px; line-height: 20px; }
+    &__more { margin-top: 32px; padding: 11px 36px; border: 1px solid #333; border-radius: 24px; font: 12px/16px 'JetBrains Mono', monospace; }
+    &__more:hover { color: #fff; background: #111; }
+    &__subscribe { padding-block: 76px; background: #0a0a0a; color: #fff; }
+    &__subscribe-inner { display: grid; grid-template-columns: 1fr 480px; align-items: center; gap: 80px; }
+    &__subscribe h2 { font-size: 44px; line-height: 1.05; letter-spacing: -.4px; }
+    &__subscribe p { margin-top: 14px; color: #999; font-size: 14px; line-height: 20px; }
+    &__subscribe form { position: relative; }
+    &__email { display: flex; border: 1px solid #aaa; height: 52px; }
+    &__email input { padding-inline: 16px; width: 100%; min-width: 0; font: 12px 'JetBrains Mono', monospace; }
+    &__email button { width: 48px; flex-shrink: 0; }
+    &__subscription-status { position: absolute; top: 100%; }
+    &__preview img { width: 100%; max-height: 55vh; object-fit: contain; margin-bottom: 24px; }
+    &__preview h2 { margin-block: 16px; font: 500 28px/1.15 'Inter', sans-serif; }
+    &__preview p { font-family: 'Inter', sans-serif; }
+    @media (max-width: 1100px) {
+        &__featured { gap: 32px; grid-template-columns: 1.6fr 1fr; }
+        &__featured h2 { font-size: 32px; }
+        &__subscribe-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+        &__subscribe h2 { font-size: 36px; }
+    }
+    @media (max-width: 640px) {
+        &__intro { padding-block: 48px; }
+        &__intro h1 { font-size: 56px; }
+        &__intro > p:last-child { font-size: 16px; }
+        &__navigation > div { gap: 22px; overflow-x: auto; }
+        &__navigation button { font-size: 10px; flex-shrink: 0; }
+        &__content { padding-block: 32px 56px; }
+        &__featured { grid-template-columns: 1fr; gap: 24px; margin-bottom: 48px; }
+        &__featured h2 { font-size: 32px; }
+        &__grid { grid-template-columns: 1fr; gap: 32px; }
+        &__card h3 { font-size: 23px; }
+        &__subscribe { padding-block: 48px 72px; }
+        &__subscribe-inner { grid-template-columns: 1fr; gap: 32px; }
+        &__subscribe h2 { font-size: 32px; }
+    }
+}
+
+.news {
+    @media (min-width: 641px) and (max-width: 1100px) {
+        &__intro { padding-top: 88px; padding-bottom: 64px; }
+        &__intro h1 { font-size: 72px; line-height: 1.1; }
+        &__intro > p:last-child { font-size: 18px; }
+        &__featured { grid-template-columns: 1fr; gap: 48px; margin-bottom: 64px; }
+        &__featured picture img { aspect-ratio: 704 / 520; }
+        &__featured h2 { font-size: 38px; line-height: 40px; }
+        &__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 16px; }
+        &__card img { aspect-ratio: 344 / 450; }
+        &__subscribe { padding-block: 80px; }
+        &__subscribe-inner { gap: 32px; }
+        &__subscribe h2 { font-size: 44px; line-height: 44px; }
+    }
+    @media (max-width: 640px) {
+        &__intro { padding-block: 48px 40px; }
+        &__intro h1 { font-size: 48px; line-height: 1.05; letter-spacing: -1px; }
+        &__intro > p:last-child { font-size: 18px; line-height: 24px; }
+        &__navigation > div { gap: 22px; }
+        &__navigation button { min-height: 48px; font-size: 9px; }
+        &__content { padding-block: 40px 96px; }
+        &__featured { gap: 24px; margin-bottom: 64px; }
+        &__featured picture img { aspect-ratio: 328 / 420; object-fit: cover; }
+        &__featured h2 { font-size: 28px; line-height: 30px; letter-spacing: -.3px; }
+        &__featured-description { font-size: 16px; line-height: 22px; }
+        &__latest > .editorial__section-heading { padding-bottom: 32px; }
+        &__grid { gap: 40px; }
+        &__card img { aspect-ratio: 328 / 410; }
+        &__meta { margin-top: 14px; }
+        &__card h3 { font-size: 22px; line-height: 25px; }
+        &__card > p { font-size: 14px; line-height: 20px; }
+        &__more { width: 100%; margin-top: 32px; padding-block: 10px; }
+        &__subscribe { padding-block: 56px; }
+        &__subscribe-inner { gap: 32px; }
+        &__subscribe h2 { font-size: 30px; line-height: 32px; }
+        &__subscribe p { font-size: 14px; line-height: 20px; }
+        &__subscription-status:not(:empty) { position: static; }
+    }
+}
+@media (min-width: 641px) and (max-width: 1100px) {
+    .news__intro { padding-bottom: 56px; }
+    .news__badge { padding-block: 4px; line-height: 16px; }
+    .news__featured-meta { margin-bottom: 18px; }
+    .news__grid { row-gap: 24px; }
+    .news__meta { margin-top: 12px; line-height: 12px; }
+    .news__card h3 { margin-top: 12px; font-size: 22px; line-height: 25px; }
+    .news__card > p { margin-top: 10px; }
+    .news__subscribe-inner { grid-template-columns: 352px 1fr; }
+    .news__subscribe h2 { font-size: 44px; }
+    .news__subscribe h2 br { display: none; }
+    .app:has(.news) .footer__info { min-height: 366px; }
+}
+@media (max-width: 640px) {
+    .news__grid { gap: 32px; }
+    .news__meta { margin-top: 12px; line-height: 12px; }
+    .news__card h3 { margin-top: 12px; }
+    .news__card > p { margin-top: 10px; }
+}
+@media (max-width: 640px) {
+    .news__featured { margin-bottom: 44px; }
+    .news__grid { row-gap: 41px; }
+    .news__subscribe { padding-block: 50px; }
+}

@@ -1,0 +1,10 @@
+FROM node:24-alpine AS build
+WORKDIR /app
+COPY kisa-brend/package*.json ./
+RUN npm ci
+COPY kisa-brend/ ./
+ENV VITE_API_URL=/api
+RUN npm run build
+FROM caddy:2-alpine
+COPY --from=build /app/dist /srv
+COPY deploy/Caddyfile /etc/caddy/Caddyfile

@@ -1,0 +1,29 @@
+.modal {
+    width: min(760px, calc(100% - 32px));
+    max-width: none;
+    max-height: calc(100dvh - 32px);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    background: #fff;
+    color: #111;
+    font-family: 'Inter', sans-serif;
+    overscroll-behavior: contain;
+
+    &::backdrop { background: #00000024; }
+
+    &__body { min-height: 100%; padding: 40px 32px 32px; }
+
+    &__close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        z-index: 1;
+    }
+
+    &__close:focus-visible { outline: 1px solid currentColor; outline-offset: -4px; }
+}

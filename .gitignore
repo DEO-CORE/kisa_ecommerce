@@ -1,0 +1,21 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Dependencies and generated files
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+dist/
+staticfiles/
+media/
+*.sqlite3
+*.sqlite3-journal
+
+# Local artifacts
+.DS_Store
+*.log

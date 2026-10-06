@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: kisa
+      POSTGRES_USER: kisa
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kisa -d kisa"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+  backend:
+    build: ./kisa_brend_back
+    command: sh -c "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn kisa_shop.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+    environment:
+      DEBUG: "False"
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Set DJANGO_SECRET_KEY}
+      ALLOWED_HOSTS: ${DOMAIN:-kisa.deo-core.codes},backend,localhost
+      CSRF_TRUSTED_ORIGINS: https://${DOMAIN:-kisa.deo-core.codes}
+      DATABASE_URL: postgres://kisa:${POSTGRES_PASSWORD}@db:5432/kisa
+      REDIS_URL: redis://redis:6379/0
+    volumes: ["static_data:/app/staticfiles", "media_data:/app/media"]
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+  frontend:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.frontend
+    environment:
+      DOMAIN: ${DOMAIN:-kisa.deo-core.codes}
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes: ["static_data:/static:ro", "media_data:/media:ro", "caddy_data:/data", "caddy_config:/config"]
+    depends_on: [backend]
+    restart: unless-stopped
+volumes:
+  postgres_data:
+  static_data:
+  media_data:
+  caddy_data:
+  caddy_config:

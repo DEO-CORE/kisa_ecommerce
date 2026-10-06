@@ -1,0 +1,115 @@
+.aboutPage {
+    &__intro { padding-top: 88px; padding-bottom: 76px; }
+    &__intro h1 { margin: 26px 0; font-size: 88px; font-weight: 600; line-height: .96; letter-spacing: -2.8px; }
+    &__lead { font-size: 22px; line-height: 29px; }
+    &__hero { width: 100%; height: auto; }
+    &__manifesto { display: grid; grid-template-columns: 330px 1fr; gap: 60px; padding-block: 120px; }
+    &__manifesto .editorial__eyebrow span { display: block; margin-top: 12px; color: #888; }
+    &__manifesto > p { font-size: 48px; line-height: 1.15; letter-spacing: -.7px; }
+    &__photos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    &__photos img { width: 100%; }
+    &__principles { padding-block: 112px; }
+    &__principle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+    &__principle { border-top: 1px solid #555; padding-top: 16px; }
+    &__principle h3 { margin: 12px 0; font-size: 24px; line-height: 1.2; }
+    &__principle > p { font-size: 13px; line-height: 20px; color: #888; }
+    &__history { background: #f3f3f1; padding-block: 96px; }
+    &__history-grid { display: grid; grid-template-columns: 410px 1fr; gap: 60px; }
+    &__history h2 { margin-top: 18px; font-size: 48px; line-height: 1.05; font-weight: 600; letter-spacing: -.6px; }
+    &__history dl > div { display: grid; grid-template-columns: 72px 1fr; gap: 24px; border-top: 1px solid #ddd; padding-block: 17px; font-size: 14px; }
+    &__history dt { font: 12px/21px 'JetBrains Mono', monospace; }
+    &__team { display: grid; grid-template-columns: 612px 1fr; gap: 56px; padding-block: 112px; }
+    &__team > img { width: 100%; }
+    &__team h2 { margin-top: 26px; font-size: 46px; line-height: 1.06; letter-spacing: -.7px; }
+    &__team-description { margin-top: 24px; font-size: 16px; line-height: 23px; }
+    &__contact { display: inline-flex; align-items: center; justify-content: center; width: 230px; min-height: 56px; margin-top: 24px; border: 1px solid #777; font: 12px 'JetBrains Mono', monospace; }
+    &__contact:hover { background: #111; color: white; }
+    @media (max-width: 1100px) {
+        &__intro h1 { font-size: clamp(40px, 6.1vw, 88px); }
+        &__manifesto { grid-template-columns: 22% 1fr; gap: 32px; }
+        &__manifesto > p, &__history h2, &__team h2 { font-size: 36px; }
+        &__team, &__history-grid { grid-template-columns: 1fr 1.15fr; gap: 32px; }
+    }
+    @media (max-width: 640px) {
+        &__intro { padding-block: 48px; }
+        &__intro h1 { font-size: 36px; letter-spacing: -1.2px; line-height: 1; }
+        &__lead { font-size: 16px; line-height: 23px; }
+        &__hero { min-height: 330px; object-fit: cover; }
+        &__manifesto { grid-template-columns: 1fr; gap: 24px; padding-block: 56px; }
+        &__manifesto > p { font-size: 28px; }
+        &__photos { gap: 10px; }
+        &__principles { padding-block: 56px; }
+        &__principle-grid { grid-template-columns: 1fr; gap: 24px; }
+        &__history { padding-block: 48px; }
+        &__history-grid, &__team { grid-template-columns: 1fr; }
+        &__history h2, &__team h2 { font-size: 32px; }
+        &__history dl > div { grid-template-columns: 44px 1fr; gap: 16px; }
+        &__team { padding-block: 56px; }
+    }
+}
+
+.aboutPage {
+    &__hero img { width: 100%; }
+    &__team > picture { min-width: 0; }
+    &__team > picture img { width: 100%; }
+    @media (min-width: 641px) and (max-width: 1100px) {
+        &__intro { padding-top: 104px; padding-bottom: 80px; }
+        &__intro h1 { max-width: 680px; margin-block: 24px; font-size: 64px; line-height: .98; letter-spacing: -1.6px; }
+        &__lead { font-size: 20px; line-height: 28px; }
+        &__lead br { display: none; }
+        &__manifesto { grid-template-columns: 184px 1fr; gap: 56px; padding-block: 120px; }
+        &__manifesto > p { font-size: 40px; line-height: 44px; letter-spacing: -.7px; }
+        &__manifesto br { display: none; }
+        &__photos img { aspect-ratio: 344 / 680; object-fit: cover; }
+        &__principles { padding-block: 112px; }
+        &__principle-grid { gap: 24px; }
+        &__principle > p { font-size: 13px; line-height: 20px; }
+        &__history-grid { grid-template-columns: 232px 1fr; gap: 56px; }
+        &__history h2 { max-width: 180px; font-size: 48px; line-height: 1.05; }
+        &__team { grid-template-columns: 324px 1fr; gap: 56px; }
+        &__team h2 { font-size: 46px; line-height: 1.05; }
+        &__team > picture img { aspect-ratio: 324 / 620; object-fit: cover; }
+    }
+    @media (max-width: 640px) {
+        &__intro { padding-block: 56px 59px; }
+        &__intro h1 { font-size: 44px; line-height: 40px; letter-spacing: -.9px; overflow-wrap: anywhere; margin-block: 26px; }
+        &__lead { font-size: 18px; line-height: 24px; }
+        &__hero { min-height: 0; }
+        &__hero img { width: 100%; height: auto; aspect-ratio: 360 / 470; object-fit: cover; }
+        &__manifesto { padding-block: 80px; gap: 40px; }
+        &__manifesto > p { font-size: 30px; line-height: 32px; letter-spacing: -.5px; }
+        &__photos { grid-template-columns: 1fr; gap: 8px; width: calc(100% + 32px); margin-inline: -16px; }
+        &__photos img { width: 100%; aspect-ratio: 360 / 420; object-fit: cover; }
+        &__principles { padding-block: 80px; }
+        &__principles .editorial__section-heading { display: grid; gap: 8px; }
+        &__principle-grid { margin-top: 32px; gap: 24px; }
+        &__principle h3 { font-size: 24px; }
+        &__principle > p { font-size: 13px; line-height: 20px; }
+        &__history { padding-block: 64px; }
+        &__history-grid { gap: 32px; }
+        &__history h2 { font-size: 36px; line-height: 36px; }
+        &__history dl > div { grid-template-columns: 72px 1fr; gap: 24px; padding-block: 20px; font-size: 14px; line-height: 20px; }
+        &__team { padding-block: 80px; gap: 32px; }
+        &__team > picture img { aspect-ratio: 328 / 420; object-fit: cover; }
+        &__team h2 { font-size: 34px; line-height: 36px; margin-top: 24px; }
+        &__team-description { font-size: 16px; line-height: 24px; }
+        &__contact { width: 100%; }
+    }
+}
+.aboutPage__mobile-break { display: none; }
+@media (min-width: 641px) and (max-width: 1100px) {
+    .aboutPage__intro { padding-bottom: 84px; }
+}
+@media (max-width: 640px) {
+    .aboutPage__mobile-break { display: initial; }
+    .aboutPage__lead { font-size: 16px; line-height: 22px; }
+    .aboutPage__manifesto { padding-block: 72px; gap: 24px; }
+    .aboutPage__principles { padding-block: 72px; }
+    .aboutPage__history { padding-block: 52px; }
+}
+@media (min-width: 641px) and (max-width: 1100px) {
+    .aboutPage__team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 641px) and (max-width: 1100px) {
+    .aboutPage__principles { padding-bottom: 105px; }
+}

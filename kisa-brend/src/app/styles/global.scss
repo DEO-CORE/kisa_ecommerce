@@ -1,0 +1,30 @@
+@use './null.scss';
+@use './mixins.scss' as *;
+
+body {
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    @include breakpoint(tablet) {
+        padding: 0 15px;
+        max-width: 1024px;
+    }
+
+    @include breakpoint(mobile) {
+        padding: 0 10px;
+        max-width: 768px;
+    }
+}

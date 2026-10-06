@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "@widgets/*": [
+        "src/widgets/*"
+      ],
+      "@features/*": [
+        "src/features/*"
+      ],
+      "@entities/*": [
+        "src/entities/*"
+      ],
+      "@shared/*": [
+        "src/shared/*"
+      ],
+      "@hooks/*": [
+        "src/shared/hooks/*"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ]
+}

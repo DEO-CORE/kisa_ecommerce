@@ -1,0 +1,135 @@
+.footer {
+    background: #FFFFFF;
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+
+    &__container {
+        container-type: inline-size;
+    }
+
+    &__info {
+        display: grid;
+        grid-template-columns: 200px 1fr auto;
+        gap: 40px;
+        min-height: 190px;
+        padding-block: 40px;
+    }
+
+    &__column {
+        display: grid;
+        align-content: start;
+        gap: 20px;
+    }
+
+    &__title {
+        margin-bottom: 14px;
+        line-height: 14px;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    &__links {
+        display: flex;
+        gap: 16px;
+        line-height: 18px;
+        letter-spacing: -0.86px;
+        white-space: nowrap;
+
+        &--buyers {
+            gap: 36px;
+        }
+    }
+
+    &__copyright {
+        text-align: right;
+        line-height: 18px;
+        white-space: nowrap;
+    }
+
+    &__copyright-line {
+        display: block;
+    }
+
+    &__wordmark {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    &__link:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    &__link:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 4px;
+    }
+
+    @media (max-width: 1200px) {
+        padding-bottom: 24px;
+        font-size: 14px;
+
+        &__info {
+            grid-template-columns: minmax(170px, 1fr) minmax(220px, 1.5fr) auto;
+            gap: 16px;
+            min-height: auto;
+            padding-block: 40px 64px;
+        }
+
+        &__column {
+            gap: 8px;
+        }
+
+        &__title {
+            margin-bottom: 8px;
+            font-weight: 600;
+            line-height: 17px;
+        }
+
+        &__links {
+            gap: 20px;
+            font-weight: 400;
+            line-height: 17px;
+            letter-spacing: 0;
+        }
+
+        &__copyright {
+            grid-column: auto;
+            font-size: 12px;
+            line-height: 1.15;
+        }
+
+        &__wordmark {
+            height: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 190px;
+            font-weight: 500;
+            line-height: 0.78;
+            letter-spacing: 0;
+            text-indent: 0;
+        }
+    }
+
+    @media (max-width: 640px) {
+        padding-bottom: 16px;
+
+        &__info {
+            grid-template-columns: 1fr;
+            gap: 28px;
+            padding-block: 32px 52px;
+        }
+
+        &__copyright {
+            text-align: left;
+        }
+
+        &__wordmark {
+            height: auto;
+            font-size: 94px;
+        }
+    }
+
+}

@@ -1,0 +1,70 @@
+/* Shared page margins and chrome follow the same three reference widths. */
+.app {
+    .container { width: min(1280px, calc(100% - 160px)); max-width: none; padding-inline: 0; }
+    .header { min-height: 80px; padding-block: 22px; }
+    .header__container { align-items: center; gap: 74px; }
+    .header__logo { line-height: 36px; }
+    .header__nav { gap: 72px; margin: 0; }
+    .header__cart { margin-top: 0; }
+    .footer { border-top: 1px solid #e5e5e5; padding-bottom: 0; font-size: 16px; }
+    .footer__info { grid-template-columns: 444px 1fr auto; gap: 40px; padding-block: 40px 64px; min-height: 230px; }
+    .footer__column { gap: 10px; }
+    .footer__title { margin-bottom: 10px; line-height: 18px; }
+    .footer__links { line-height: 20px; letter-spacing: 0; gap: 24px; font-weight: 400; }
+    .footer__copyright { font-size: 14px; line-height: 16px; }
+    .footer__wordmark { width: calc(100% + 160px); max-width: none; height: auto; margin-inline: -80px; }
+    .footer__wordmark--mono { display: none; }
+}
+@media (max-width: 1100px) {
+    .app {
+        .container, .editorial__container { width: calc(100% - 64px); }
+        .header { min-height: 64px; padding-block: 12px; }
+        .header__container { gap: 56px; }
+        .header__nav { gap: 56px; }
+        .header__link { font-size: 18px; }
+        .footer__info { grid-template-columns: 216px 1fr 170px; gap: 16px; padding-block: 40px 64px; min-height: 230px; }
+        .footer__copyright { white-space: normal; }
+        .footer__title { font-weight: 500; }
+        .footer__links { gap: 20px; }
+        .footer__wordmark { width: calc(100% + 64px); margin-inline: -32px; }
+        .footer--shop .footer__wordmark:not(.footer__wordmark--mono) { display: none; }
+        .footer--shop .footer__wordmark--mono { display: block; margin: 0; width: 100%; padding-bottom: 24px; text-align: center; font: 600 clamp(80px, 25vw, 230px)/1 'JetBrains Mono', monospace; letter-spacing: 0; }
+    }
+}
+@media (min-width: 641px) and (max-width: 740px) {
+    .app .header__container { gap: 32px; }
+    .app .header__nav { gap: 32px; }
+    .app .footer__info { grid-template-columns: 1fr 1.4fr 130px; }
+    .app .footer { font-size: 13px; }
+    .app .footer__links { gap: 10px; }
+}
+@media (max-width: 640px) {
+    .app {
+        .container, .editorial__container { width: calc(100% - 32px); }
+        .header { min-height: 64px; padding-block: 12px; }
+        .header__container { gap: 20px; }
+        .header__logo { font-size: 24px; width: 58px; line-height: 32px; }
+        .header__toggle { font-size: 12px; gap: 8px; }
+        .header__cart { width: 40px; }
+        .header__cart-icon { width: 24px; }
+        .header__cart-count { font-size: 9px; width: 13px; height: 13px; }
+        .header__cart-plus { display: none; }
+        .footer__info { grid-template-columns: 1fr; gap: 40px; padding-block: 40px 64px; min-height: 0; }
+        .footer__column { gap: 8px; }
+        .footer__title { margin-bottom: 8px; line-height: 18px; }
+        .footer__links { line-height: 20px; }
+        .footer__copyright { width: 170px; font-size: 12px; line-height: 14px; }
+        .footer__wordmark { width: calc(100% + 32px); margin-inline: -16px; }
+        .footer--shop .footer__wordmark--mono { padding-bottom: 20px; font-size: 25vw; }
+        .homePage__banner { height: min(820px, 100svh); min-height: 480px; }
+    }
+    .app--editorial .header__cart-count { font-size: 0; }
+}
+@media (min-width: 1101px) {
+    .app .footer--shop .footer__info { grid-template-columns: 200px 1fr auto; min-height: 190px; padding-bottom: 40px; }
+    .app:has(.detailCatalog) .footer__info { min-height: 190px; padding-bottom: 40px; }
+    .app:has(.aboutPage) > .footer { padding-bottom: 58px; }
+}
+@media (max-width: 640px) {
+    .app .footer__info { padding-top: 32px; gap: 32px; }
+}

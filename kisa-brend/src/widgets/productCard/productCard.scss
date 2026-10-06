@@ -1,0 +1,66 @@
+.productCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    font-family: 'JetBrains Mono', monospace;
+    text-align: center;
+
+    &__media { position: relative; display: block; width: 100%; aspect-ratio: 303 / 356; margin-bottom: 16px; overflow: hidden; }
+    &__picture { position: relative; width: 100%; height: 100%; }
+    &__placeholder { position: absolute; inset: 0; width: 100%; height: 100%; }
+    &__picture:not(&__picture--loaded) &__image { opacity: 0; }
+    &__image-error { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; }
+    &__image { width: 100%; height: 100%; object-fit: contain; transition: transform 200ms ease; }
+    &__media:hover &__image { transform: scale(1.025); }
+    &__badge { position: absolute; top: 2px; right: 8%; width: 88px; padding: 6px 8px; border-radius: 6px; background: #ffcf18; color: #111; font-size: 10px; line-height: 16px; }
+    &__name { max-width: 290px; font-size: 20px; font-weight: 600; line-height: 1; letter-spacing: -0.8px; }
+    &__price { margin-top: 6px; font-size: 14px; line-height: 20px; }
+    &__options { display: grid; gap: 4px; width: 146px; max-width: 100%; margin-top: 12px; }
+    &__select { width: 100%; height: 31px; padding: 0 6px; border: 1px solid #e4e4e4; border-radius: 11px; appearance: none; cursor: pointer; text-align: center; text-align-last: center; font-size: 11px; line-height: 1; }
+    &__buy { margin-top: 19px; padding: 7px 14px; border: 1px solid #202020; border-radius: 12px; font-size: 12px; line-height: 18px; transition: background 150ms, color 150ms; }
+    &__buy:hover { background: #111; color: #fff; }
+    &__buy:disabled { opacity: 0.4; cursor: default; }
+    &__media:focus-visible, &__name:focus-visible, &__select:focus-visible, &__buy:focus-visible { outline: 2px solid #777; outline-offset: 3px; }
+
+    &--related &__media { aspect-ratio: 1.4; margin-bottom: 12px; }
+    &--related &__image { object-fit: cover; object-position: center 36%; }
+    &--related &__name { font-size: 12px; font-weight: 500; }
+    &--related &__price { margin-top: 10px; }
+
+    @media (max-width: 640px) {
+        &__media { margin-bottom: 12px; }
+        &__name { font-size: 11px; }
+        &__price { font-size: 10px; }
+        &__badge { right: 4px; width: 54px; padding: 2px 4px; border-radius: 4px; font-size: 8px; }
+        &__options { width: 110px; gap: 4px; margin-top: 8px; }
+        &__select { height: 28px; font-size: 10px; }
+        &__buy { min-height: 32px; margin-top: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { &__image, &__buy { transition: none; } }
+}
+
+.productCard {
+    &__color { display: none; }
+    &__name { font-size: 16px; line-height: 1.2; letter-spacing: -.5px; }
+    &__media { aspect-ratio: 4 / 5; }
+    &__options { width: 128px; gap: 4px; margin-top: 8px; }
+    &__select { height: 27px; border-radius: 8px; }
+    &__buy { margin-top: 14px; padding: 5px 12px; font-size: 10px; line-height: 16px; }
+    @media (max-width: 1100px) {
+        &__options { display: none; }
+        &__color { display: block; margin-top: 4px; font-size: 10px; line-height: 16px; color: #999; }
+        &__name { font-size: 12px; letter-spacing: -.4px; }
+        &__price { font-size: 11px; line-height: 16px; margin-top: 3px; }
+        &__badge { width: 40px; right: 0; padding: 5px; font-size: 9px; line-height: 14px; }
+        &__buy { margin-top: 10px; border-radius: 18px; }
+    }
+    @media (max-width: 640px) {
+        &__media { margin-bottom: 16px; }
+        &__name { font-size: 10px; line-height: 12px; }
+        &__price { font-size: 9px; line-height: 12px; }
+        &__color { font-size: 9px; line-height: 12px; margin-top: 3px; }
+        &__badge { font-size: 8px; width: 40px; padding: 3px 5px; }
+        &__buy { min-height: 24px; margin-top: 10px; padding: 3px 12px; font-size: 9px; line-height: 16px; }
+    }
+}
