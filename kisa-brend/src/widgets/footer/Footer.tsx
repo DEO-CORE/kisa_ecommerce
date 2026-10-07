@@ -47,12 +47,12 @@ export const Footer = ({ shop = false }: { shop?: boolean }) => {
                             </div>
                         </section>
                     </div>
-                    <p className="footer__copyright">
+                    <div className="footer__copyright">
                         <span className="footer__copyright-line">KISA E COMMERCE©</span>
                         <span className="footer__copyright-line">ALL RIGHTS RESERVED</span>
-                    </p>
+                        <StudioCredit />
+                    </div>
                 </div>
-                <div className="footer__studio"><StudioCredit /></div>
                 {isShop && <div className="footer__wordmark footer__wordmark--mono" aria-label="KISA">KISA</div>}
                 <img className="footer__wordmark" src="/images/brand/kisa-display.png" alt="KISA" width={1440} height={446} />
             </div>

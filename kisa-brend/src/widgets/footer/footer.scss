@@ -141,5 +141,4 @@
 
 @media (max-width: 640px) { .footer__links--buyers { grid-template-columns: 1fr; } }
 
-.footer__studio { display: flex; justify-content: flex-end; padding: 0 0 24px; }
-@media (max-width: 640px) { .footer__studio { justify-content: flex-start; padding-bottom: 24px; } }
+.footer__copyright .studio-credit { margin-top: 12px; }

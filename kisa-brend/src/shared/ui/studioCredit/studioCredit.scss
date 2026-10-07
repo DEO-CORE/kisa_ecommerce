@@ -3,11 +3,12 @@
     align-items: center;
     justify-content: center;
     min-height: 44px;
-    padding: 6px 0;
+    padding: 8px 0;
     flex-shrink: 0;
+    opacity: .55;
     transition: opacity 180ms ease;
-    img { display: block; width: 158px; max-width: 100%; height: auto; }
-    &:hover { opacity: .75; }
-    &:focus-visible { outline: 2px solid #F08331; outline-offset: 5px; }
+    img { display: block; width: 118px; max-width: 100%; height: auto; filter: brightness(0); }
+    &:hover { opacity: 1; }
+    &:focus-visible { opacity: 1; outline: 1px solid #111; outline-offset: 4px; }
 }
 @media (prefers-reduced-motion: reduce) { .studio-credit { transition: none; } }
