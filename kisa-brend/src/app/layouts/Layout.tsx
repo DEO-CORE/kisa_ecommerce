@@ -10,17 +10,15 @@ import '../styles/editorial.scss';
 import '../styles/responsive.scss';
 
 export const Layout = () => {
-    const { isLoading } = useAppLoading(800);
+    const { isLoading, isReady } = useAppLoading();
     const { pathname } = useLocation();
     const isHome = pathname === paths.main;
     const isEditorial = pathname === paths.about || pathname === paths.news;
 
-    if (isLoading) {
-        return <LoadingPage />;
-    }
-
     return (
-        <div className={`app${isEditorial ? ' app--editorial' : ''}`}>
+        <>
+        {isLoading && <LoadingPage leaving={isReady} />}
+        <div className={`app${isEditorial ? ' app--editorial' : ''}`} inert={isLoading} aria-hidden={isLoading || undefined}>
             <Header />
             <main className={isHome || isEditorial ? 'main' : 'main container'}>
                 <Suspense fallback={<LoadingPage />}>
@@ -31,5 +29,6 @@ export const Layout = () => {
             <CartDrawer />
             <CookieBanner />
         </div>
+        </>
     );
 };
