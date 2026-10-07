@@ -1,3 +1,4 @@
+import { StudioCredit } from '@/shared/ui/studioCredit/StudioCredit';
 import './footer.scss';
 import { Link } from 'react-router-dom';
 import { useContent, useList } from '@/shared/api/content';
@@ -51,6 +52,7 @@ export const Footer = ({ shop = false }: { shop?: boolean }) => {
                         <span className="footer__copyright-line">ALL RIGHTS RESERVED</span>
                     </p>
                 </div>
+                <div className="footer__studio"><StudioCredit /></div>
                 {isShop && <div className="footer__wordmark footer__wordmark--mono" aria-label="KISA">KISA</div>}
                 <img className="footer__wordmark" src="/images/brand/kisa-display.png" alt="KISA" width={1440} height={446} />
             </div>
