@@ -14,6 +14,7 @@ import {
 } from "@pages/index";
 
 export const router = createBrowserRouter([
+    { path: "*", element: <ErrorPage notFound /> },
     {
         path: '/',
         element: <Layout />,

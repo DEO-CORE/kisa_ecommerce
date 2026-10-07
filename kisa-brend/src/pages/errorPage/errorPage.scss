@@ -1,0 +1,8 @@
+.error-page { min-height: 100svh; background: #fafaf8; color: #111; }
+.error-page__header, .error-page__footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 32px; font: 500 10px/1.5 'JetBrains Mono', monospace; }
+.error-page__header { border-bottom: 1px solid #ddddd7; }
+.error-page__header a { color: inherit; text-decoration: none; }
+.error-page__header a:first-child { font: 800 32px/1 'Inter', Arial, sans-serif; letter-spacing: -.08em; }
+.error-page__header a:focus-visible { outline: 2px solid #111; outline-offset: 5px; }
+.error-page__footer { border-top: 1px solid #ddddd7; font-size: 9px; }
+@media (max-width: 700px) { .error-page__header, .error-page__footer { padding: 20px 24px; } .error-page__header > span { display: none; } .error-page__footer { font-size: 8px; } }

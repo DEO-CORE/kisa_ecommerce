@@ -1,3 +1,4 @@
+import { StateScreen } from '@/shared/ui/stateScreen/StateScreen';
 import { useState } from 'react';
 import { Modal } from '@/shared/ui/Modal';
 import { useContent, useList, subscribe } from '@/shared/api/content';
@@ -12,7 +13,7 @@ const categories: Record<string, string> = { ITEM: 'ВЕЩИ', PEOPLE: 'ЛЮДИ
 const ArticlePreview = ({ slug }: { slug: string }) => {
     const query = useContent<Publication>(`/journal/publications/${encodeURIComponent(slug)}/`);
     if (query.isPending) return <p role="status">Загрузка…</p>;
-    if (query.error) return <p role="alert">{query.error.message}</p>;
+    if (query.error) return <StateScreen compact code="OFF" label="Публикация недоступна" title="История прервалась." description="Не удалось открыть публикацию. Попробуйте загрузить её ещё раз." action={{ label: 'Повторить', onClick: () => void query.refetch(), busy: query.isFetching }} />;
     const article = query.data;
     return <>{(article.hero_image_url || article.preview_image_url) && <img src={article.hero_image_url || article.preview_image_url!} alt={article.title} />}<h2>{article.title}</h2><p style={{ whiteSpace: 'pre-wrap' }}>{article.content || article.preview_text}</p></>;
 };
@@ -29,7 +30,7 @@ export const NewsPage = () => {
         <nav className="news__navigation" aria-label="Категории новостей"><div className="editorial__container">{['ВСЕ', ...Object.keys(categories)].map(value => <button type="button" key={value} aria-pressed={category === value} onClick={() => { setCategory(value); setLimit(6); }}>{categories[value] || value}</button>)}</div></nav>
         <div className="editorial__container news__content">
             {query.isPending && <p role="status">Загрузка…</p>}
-            {query.error && <p role="alert">{query.error.message}</p>}
+            {query.error && <StateScreen compact code="OFF" label="Журнал недоступен" title="Истории немного подождут." description="Не удалось загрузить журнал. Проверьте подключение и попробуйте снова." action={{ label: 'Повторить', onClick: () => void query.refetch(), busy: query.isFetching }} />}
             {query.isSuccess && !articles.length && <p>Публикаций пока нет.</p>}
             <section className="news__latest"><div className="news__grid">{articles.slice(0, limit).map(article => <article className="news__card" key={article.slug}>
                 <button className="news__image-button" type="button" onClick={() => setOpened(article)} aria-label={article.title}>{article.preview_image_url && <img src={article.preview_image_url} alt={article.title} width={410} height={450} loading="lazy" />}</button>

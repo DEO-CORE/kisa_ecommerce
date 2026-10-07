@@ -1,3 +1,4 @@
+import { StateScreen } from '@/shared/ui/stateScreen/StateScreen';
 import { useState } from 'react';
 import { generatePath, Link, useParams } from 'react-router-dom';
 import { Plus } from 'lucide-react';
@@ -102,8 +103,8 @@ export const DetailCatalogPage = () => {
     const { id } = useParams();
     const { products, isRemote, error } = useProductCatalog();
     if (!isRemote && !error) return <p role="status">Загрузка товара…</p>;
-    if (error) return <p role="alert">Не удалось загрузить товар. Обновите страницу.</p>;
+    if (error) return <StateScreen code="OFF" label="Нет связи с каталогом" title="Небольшая пауза в примерке." description="Не удалось загрузить товар. Проверьте подключение и попробуйте ещё раз." action={{ label: 'Повторить загрузку', onClick: () => window.location.reload() }} />;
     const product = products.find((item) => item.id === (id === 'demo' ? 'hoodie-grey' : id));
-    if (!product) return <section className="detailCatalog detailCatalog--missing"><h1 className="detailCatalog__title">Товар не найден</h1><Link className="detailCatalog__all" to={paths.catalog}>← Вернуться в каталог</Link></section>;
+    if (!product) return <StateScreen code="404" label="Товар не найден" title="Эта вещь сменила планы." description="Возможно, товар снят с публикации или ссылка устарела. Посмотрите, что есть в текущей коллекции." />;
     return <ProductDetails product={product} key={product.id} />;
 };

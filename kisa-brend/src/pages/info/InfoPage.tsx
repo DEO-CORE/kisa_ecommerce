@@ -1,3 +1,4 @@
+import { StateScreen } from '@/shared/ui/stateScreen/StateScreen';
 import { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useContent } from '@/shared/api/content';
@@ -33,7 +34,7 @@ export const InfoPage = ({ pageType }: { pageType: string }) => {
                 <nav className="info-page__nav" aria-label="Документы магазина">{documents.map(item => <Link key={item.type} to={item.path} aria-current={item.type === pageType ? 'page' : undefined}>{item.label} <span aria-hidden="true">↗</span></Link>)}</nav>
                 <div className="info-page__content">
                     {page.isPending && <p role="status">Загружаем информацию…</p>}
-                    {page.isError && <div role="alert"><p>Страница пока недоступна.</p><button type="button" onClick={() => void page.refetch()}>Попробовать снова →</button></div>}
+                    {page.isError && <StateScreen compact code="OFF" label="Информация недоступна" title="Нужна ещё одна попытка." description="Не удалось загрузить эту страницу. Попробуйте снова немного позже." action={{ label: 'Повторить', onClick: () => void page.refetch(), busy: page.isFetching }} />}
                     {page.data?.content.split(/\n\s*\n/).map((block, index) => {
                         if (!block.startsWith('## ')) return <p key={index}>{block}</p>;
                         const [heading, ...lines] = block.split('\n');

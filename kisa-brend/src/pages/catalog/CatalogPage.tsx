@@ -1,3 +1,4 @@
+import { StateScreen } from '@/shared/ui/stateScreen/StateScreen';
 import { useState, type CSSProperties } from 'react';
 import { useProductCatalog } from '@/entities/product/productCatalogContext';
 import { ProductCard } from '@/widgets/productCard/ProductCard';
@@ -20,6 +21,7 @@ export const CatalogPage = () => {
     const adaptiveOrder = [0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 4, 9, 14, 15];
     const reset = () => { setColor(''); setCategory(''); setCollection(''); setSort(''); setLimit(16); };
 
+    if (error) return <StateScreen code="OFF" label="Каталог недоступен" title="Коллекция вне связи." description="Не удалось загрузить товары. Проверьте подключение и попробуйте снова." action={{ label: 'Повторить загрузку', onClick: () => window.location.reload() }} />;
     return (
         <section className="catalog" aria-label="Каталог одежды">
             {error && <p className="catalog__api-notice" role="status">Сервер каталога недоступен. Попробуйте обновить страницу.</p>}
@@ -57,7 +59,7 @@ export const CatalogPage = () => {
             <div className="catalog__grid">
                 {visible.map((product, index) => <div className="catalog__item" key={`${product.id}-${index}`} style={{ '--catalog-order': hasFilters ? index : adaptiveOrder[index] ?? index } as CSSProperties}><ProductCard product={product} /></div>)}
             </div>
-            {!visible.length && <div className="catalog__empty"><p className="catalog__empty-text">Товары не найдены</p><button className="catalog__reset" type="button" onClick={reset}>Сбросить фильтры</button></div>}
+            {isRemote && !visible.length && <StateScreen compact code="00" label="Пока ничего" title={hasFilters ? 'Такой микс ещё не сложился.' : 'Новая история на подходе.'} description={hasFilters ? 'Для этих фильтров вещей не нашлось. Попробуйте другое сочетание цвета, категории и коллекции.' : 'В каталоге пока нет товаров. Загляните чуть позже — здесь появятся новые вещи.'} action={hasFilters ? { label: 'Сбросить фильтры', onClick: reset } : { label: 'Обновить каталог', onClick: () => window.location.reload() }} />}
             {visible.length < sorted.length && <button className="catalog__more" type="button" onClick={() => setLimit((value) => value + 4)}>Загрузить ещё</button>}
         </section>
     );

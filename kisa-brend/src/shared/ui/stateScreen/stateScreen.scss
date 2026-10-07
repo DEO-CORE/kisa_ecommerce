@@ -1,0 +1,50 @@
+.state-screen {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    min-height: min(740px, 85svh);
+    background: #fafaf8;
+    color: #111;
+    font-family: 'Inter', Arial, sans-serif;
+    &__art { position: relative; display: grid; align-items: center; overflow: hidden; padding: 36px; border-right: 1px solid #ddddd7; min-height: 430px; }
+    &__coordinate, &__edition, &__label, &__footnote { font: 500 10px/1.6 'JetBrains Mono', monospace; letter-spacing: .05em; }
+    &__coordinate { position: absolute; left: 32px; top: 30px; }
+    &__edition { position: absolute; left: 32px; bottom: 30px; }
+    &__number { font-size: clamp(140px, 20vw, 300px); font-weight: 800; line-height: 1; letter-spacing: -.085em; color: #deded8; text-align: center; }
+    &__seam { position: absolute; top: 52%; left: -10%; width: 120%; border-top: 1px dashed #aaa9a1; transform: rotate(-19deg); }
+    &__tag { position: absolute; left: 47%; top: 26%; z-index: 1; width: 150px; min-height: 220px; background: #111; color: #fafaf8; padding: 34px 18px 18px; transform-origin: 50% 12px; animation: kisa-tag-sway 7s ease-in-out infinite; box-shadow: 12px 18px 0 #0000000a; }
+    &__tag::before { content: ''; position: absolute; width: 7px; height: 7px; border-radius: 50%; top: 11px; left: calc(50% - 3px); background: #fafaf8; }
+    &__tag > span { font-size: 37px; font-weight: 800; letter-spacing: -.08em; }
+    &__tag i { display: block; height: 1px; background: #ffffff55; margin: 17px 0; }
+    &__tag small { font: 500 8px/1.8 'JetBrains Mono', monospace; }
+    &__tag b { display: block; font-size: 36px; text-align: right; margin-top: 14px; font-weight: 400; }
+    &__content { align-self: center; padding: clamp(28px, 5vw, 80px); }
+    &__label { text-transform: uppercase; margin-bottom: 24px; }
+    h1 { font-size: clamp(32px, 4vw, 62px); font-weight: 600; letter-spacing: -.055em; line-height: 1.04; margin: 0 0 24px; max-width: 540px; }
+    &__description { font-size: 14px; line-height: 1.7; color: #65655f; max-width: 390px; }
+    &__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+    &__actions a, &__actions button { display: flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 48px; padding: 14px 20px; border: 1px solid #111; color: #fff; background: #111; text-decoration: none; font: 500 11px/1.5 'JetBrains Mono', monospace; cursor: pointer; transition: background 180ms; }
+    &__actions a:hover, &__actions button:hover { background: #333; }
+    &__actions .state-screen__secondary { color: #111; background: transparent; border-color: #ccccc5; }
+    &__actions .state-screen__secondary:hover { background: #eaeae4; }
+    &__actions :focus-visible { outline: 2px solid #111; outline-offset: 4px; }
+    &__actions button:disabled { opacity: .5; cursor: wait; }
+    &__footnote { color: #777770; margin-top: 38px; font-size: 9px; }
+    &--compact { min-height: 390px; margin: 24px 0; }
+    &--compact .state-screen__art { min-height: 340px; }
+    &--compact .state-screen__number { font-size: clamp(100px, 14vw, 210px); }
+    &--compact .state-screen__tag { width: 115px; min-height: 180px; top: 18%; padding: 28px 14px 14px; }
+    &--compact h1 { font-size: clamp(28px, 3vw, 42px); }
+}
+@keyframes kisa-tag-sway { 0%, 100% { transform: rotate(10deg); } 50% { transform: rotate(3deg); } }
+@media (max-width: 700px) {
+    .state-screen { grid-template-columns: 1fr; min-height: auto; }
+    .state-screen__art { border-right: 0; border-bottom: 1px solid #ddddd7; min-height: 320px; }
+    .state-screen__number { font-size: clamp(160px, 45vw, 260px); }
+    .state-screen__tag { width: 116px; min-height: 185px; top: 18%; padding: 28px 14px 14px; }
+    .state-screen__coordinate, .state-screen__edition { left: 24px; font-size: 8px; }
+    .state-screen__content { padding: 32px 24px; }
+    .state-screen__footnote { margin-top: 26px; }
+    .state-screen--compact .state-screen__art { min-height: 260px; }
+    .state-screen--compact .state-screen__number { font-size: 150px; }
+}
+@media (prefers-reduced-motion: reduce) { .state-screen__tag { animation: none; transform: rotate(7deg); } .state-screen__actions a, .state-screen__actions button { transition: none; } }
